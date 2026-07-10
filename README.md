@@ -63,49 +63,22 @@ Use the following credentials to explore the different roles:
 
 ---
 
-## 🛠️ Local Installation
+## 📁 Folder Structure
 
-Want to run the project locally? Follow these steps:
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/nani-1114/U-cab.git
-cd U-cab
+```text
+config/                      → environment and database connection
+controllers/                 → business logic (auth, user, driver, admin, ride, payment, coupon, review, notification, support)
+middleware/                  → auth, role authorization, error handling, file upload
+models/                      → Mongoose schemas (User, Driver, Ride, Payment, Coupon, Review, Notification, SupportTicket)
+routes/                      → Express route definitions per module
+utils/                       → generateToken, fareCalculator, apiResponse, validators
+uploads/                     → uploaded driver documents (served statically at /uploads)
+frontend/                    → React.js (Vite) client application
+app.js                       → Express application setup
+server.js                    → startup and DB connection
+package.json                 → backend dependencies
+vercel.json                  → vercel deployment configuration
 ```
-
-### 2. Setup the Backend
-Open a terminal in the root directory:
-```bash
-npm install
-```
-Create a `.env` file in the root directory and add:
-```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-PORT=5000
-NODE_ENV=development
-```
-Start the backend server:
-```bash
-npm run dev
-```
-
-### 3. Setup the Frontend
-Open a **new** terminal in the `frontend` folder:
-```bash
-cd frontend
-npm install
-```
-Create a `.env` file in the `frontend` folder and add:
-```env
-VITE_API_URL=http://localhost:5000/api
-```
-Start the frontend development server:
-```bash
-npm run dev
-```
-
-The app will now be running on `http://localhost:5173`!
 
 ---
 
