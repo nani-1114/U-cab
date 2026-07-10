@@ -21,6 +21,17 @@ const supportRoutes = require('./routes/supportRoutes');
 
 const app = express();
 
+// Ensure DB connection for Vercel Serverless environment
+const connectDB = require('./config/db');
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.use(helmet());
 app.use(compression());
 app.use(cors({
