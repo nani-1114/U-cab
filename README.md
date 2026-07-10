@@ -1,69 +1,118 @@
-# Ucab — Cab Booking System
+# 🚕 UCab - Complete MERN Cab Booking System
 
-Production-ready Node.js/Express/MongoDB backend for a MERN cab booking platform, built with MVC architecture.
+A full-stack, production-ready cab booking platform built with the **MERN stack** (MongoDB, Express, React, Node.js). 
+This project features a comprehensive ecosystem with three distinct portals: **Rider, Driver, and Admin**.
 
-## Setup
+![UCab Banner](https://img.shields.io/badge/MERN-Stack-blue)
+![Vercel](https://img.shields.io/badge/Deployed-Vercel-black)
 
+## 🌟 Live Demo
+
+The application is fully deployed and accessible live on Vercel:
+- **Frontend / Client App:** [https://u-cab-j5zn.vercel.app](https://u-cab-j5zn.vercel.app)
+- **Backend API:** [https://u-cab-gjmf.vercel.app](https://u-cab-gjmf.vercel.app)
+
+### 🔐 Test Credentials
+Use the following credentials to explore the different roles:
+
+**Admin Dashboard:**
+- **Email:** `admin@ucab.com`
+- **Password:** `Admin@123`
+
+*(You can register new Riders and Drivers directly on the platform to test the full flow).*
+
+---
+
+## 🚀 Features
+
+### 👤 Rider Portal
+- User Authentication & Profile Management
+- Interactive Map & Fare Estimation
+- Select Cab Type (Mini, Sedan, SUV, etc.)
+- Real-time Ride Status & History
+- Driver Reviews & Ratings
+
+### 🚗 Driver Portal
+- Secure Registration (Requires Admin Approval)
+- Go Online / Offline Toggle
+- Accept or Reject incoming ride requests
+- Trip management (Start Ride / Complete Ride)
+- Earnings Dashboard & Ride History
+
+### 🛡️ Admin Dashboard
+- **Analytics:** View total users, drivers, rides, and revenue.
+- **Driver Management:** Approve/Reject new driver registrations.
+- **User Management:** Oversee all riders on the platform.
+- **Ride Monitoring:** Track active and completed rides.
+
+---
+
+## 💻 Tech Stack
+
+**Frontend:**
+- React.js (Vite)
+- Tailwind CSS / Custom CSS for Premium UI
+- React Router DOM
+- Axios for API requests
+
+**Backend:**
+- Node.js & Express.js
+- MongoDB & Mongoose (MVC Architecture)
+- JSON Web Tokens (JWT) for authentication
+- bcryptjs for password hashing
+
+---
+
+## 🛠️ Local Installation
+
+Want to run the project locally? Follow these steps:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/nani-1114/U-cab.git
+cd U-cab
+```
+
+### 2. Setup the Backend
+Open a terminal in the root directory:
 ```bash
 npm install
-cp .env.example .env   # then fill in your own values
-npm run dev             # or: npm start
+```
+Create a `.env` file in the root directory and add:
+```env
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+PORT=5000
+NODE_ENV=development
+```
+Start the backend server:
+```bash
+npm run dev
 ```
 
-Requires a MongoDB Atlas connection string in `MONGO_URI`.
-
-## Folder Structure
-
+### 3. Setup the Frontend
+Open a **new** terminal in the `frontend` folder:
+```bash
+cd frontend
+npm install
 ```
-config/                      → environment and database connection
-controllers/                 → business logic (auth, user, driver, admin, ride, payment, coupon, review, notification, support)
-middleware/                  → auth, role authorization, error handling, file upload
-models/                      → Mongoose schemas (User, Driver, Ride, Payment, Coupon, Review, Notification, SupportTicket)
-routes/                      → Express route definitions per module
-utils/                       → generateToken, fareCalculator, apiResponse, validators
-uploads/                     → uploaded driver documents (served statically at /uploads)
-app.js                       → Express application setup
-server.js                    → startup and DB connection
-package.json
-.env.example
-vercel.json
+Create a `.env` file in the `frontend` folder and add:
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+Start the frontend development server:
+```bash
+npm run dev
 ```
 
-## Auth Model
+The app will now be running on `http://localhost:5173`!
 
-- Users and admins both live in the `User` collection, distinguished by `role` (`user` | `admin`). Seed an admin manually by inserting a `User` document with `role: 'admin'` (password will be hashed automatically via the pre-save hook if inserted through the app or a small seed script).
-- Drivers are a separate collection and must be approved by an admin (`approvalStatus`) before they can log in and go online.
-- All protected routes require an `Authorization: Bearer <token>` header. Tokens are role-aware; `roleMiddleware.authorizeRoles(...)` restricts access per route.
+---
 
-## Key API Groups
+## 🌐 Deployment (Vercel)
 
-| Base Path | Description |
-|-----------|-------------|
-| `/api/auth` | Register/login for user, driver, admin |
-| `/api/users` | Profile, fare estimate, book/cancel ride, history, live ride |
-| `/api/drivers` | Profile, availability, accept/reject/start/complete ride, earnings |
-| `/api/admin` | Dashboard, manage users/drivers/rides/payments |
-| `/api/rides` | Get ride by id, live status, status update (admin) |
-| `/api/payments` | Dummy payment, history, receipt |
-| `/api/coupons` | CRUD (admin), active coupons (user) |
-| `/api/reviews` | Submit review, get driver reviews |
-| `/api/notifications` | List, mark read |
-| `/api/support` | Raise ticket, view/respond (admin) |
+This project is optimized for deployment on Vercel. 
+- **Backend:** The `vercel.json` file in the root directory configures the Express app as Vercel Serverless Functions.
+- **Frontend:** The `frontend` directory is a standard Vite project.
 
-## Production deployment
-
-- Set `MONGO_URI` to your MongoDB Atlas connection string.
-- Set `JWT_SECRET` to a strong production secret.
-- Set `CORS_ORIGIN` to your frontend domain(s).
-- For Vercel, ensure the Express app is exported from [app.js](app.js) and the deployment uses [vercel.json](vercel.json).
-- For the frontend, create a Vercel environment variable named `VITE_API_URL` pointing to your deployed backend URL.
-- If using a separate frontend domain, add it to `CORS_ORIGIN`.
-
-## Notes
-
-- Passwords are hashed with `bcryptjs` via Mongoose pre-save hooks.
-- All controllers use `async/await` with try/catch and return consistent JSON via `utils/apiResponse.js`.
-- A global error handler (`middleware/errorMiddleware.js`) normalizes Mongoose cast/validation/duplicate-key errors.
-- Payment processing is a dummy simulation (`paymentController.makePayment`) and can be swapped for a real gateway later without touching the rest of the app.
-
-"# U-cab" 
+*Built with ❤️ for the modern web.*
